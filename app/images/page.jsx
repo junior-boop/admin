@@ -3,7 +3,7 @@ import Header from "@/components/header";
 import Images_content from "@/components/images-content";
 
 const getData = async () => {
-    const response = await fetch('http://localhost:3000/api/images', {cache : 'no-store'})
+    const response = await fetch('https://simple-server-e1bs.onrender.com/api/images', {cache : 'no-store'})
     const data = await response.json()
 
     if(!response.ok) throw new Error('il y a une erreur')

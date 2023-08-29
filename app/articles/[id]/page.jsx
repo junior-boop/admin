@@ -3,7 +3,7 @@ import { CarbonWarningAltFilled } from "@/components/icon";
 import Link from "next/link";
 
 const getData = async (id) => {
-    const response = await fetch('http://localhost:3000/api/articles/edit/'+id, {cache : "no-cache"})
+    const response = await fetch('https://simple-server-e1bs.onrender.com/api/articles/edit/'+id, {cache : "no-cache"})
     const data = await response.json()
 
     if(!response) throw new Error('il y a un probleme')

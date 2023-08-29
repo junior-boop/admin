@@ -103,7 +103,9 @@ const MoreContent = ({data, isOpen, closeBtn}) =>{
             <div className=" w-full aspect-square border border-slate-100">
                 <img src={"http://localhost:3000"+images.image_path} alt="" />
             </div>
-            <div></div>
+            <div>
+                
+            </div>
         </div>
     )   
 }
