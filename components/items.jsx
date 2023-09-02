@@ -4,7 +4,6 @@ import { ButtonLinkWhite, ButtonWhite } from "./button";
 import { IcBaselineDeleteOutline, IcTwotoneEdit, IconamoonShare2, IconamoonShare2Light } from "./icon";
 import { useRouter } from "next/navigation";
 import moment from "moment/moment";
-import { useState } from "react";
 
 const calculeDataEcart = (userData) => {
     const day = ['Dim','Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam']
@@ -37,12 +36,14 @@ const calculeDataEcart = (userData) => {
 
 }
 
-export default function Items({url = '/', data}){
+
+
+export default function Items({url = '/', data, id}){
     const {titre, images, createdBy, createdAt, key, imagesAlbum} = data.Item
     const router = useRouter()
 
     const handleDeleteItems = async () => {
-        const api = await fetch('http://localhost:3000/api/articles/'+ key, {
+        const api = await fetch('http://18.215.69.15:3000/api/articles/'+ id, {
             method : 'DELETE',
         })
 
@@ -51,8 +52,9 @@ export default function Items({url = '/', data}){
         } 
     }
 
-    const album = imagesAlbum[0].length > 0 && imagesAlbum[0].split(',')
-
+    console.log(imagesAlbum)
+    const album = imagesAlbum.length > 0 && imagesAlbum.split(',')
+// 
 
     const imageMap = () => {
        const tb = []
@@ -69,13 +71,13 @@ export default function Items({url = '/', data}){
     const Imagethumb = ({imagev}) => {
         return(
             <div style={{border : "3px solid white"}} className="w-8 h-8 rounded-full overflow-hidden ml-[-12px]">
-                <img src={'http://localhost:3000' + imagev} alt="" className="w-8 h-8 object-cover object-center"/>
+                <img src={'http://18.215.69.15:3000' + imagev} alt="" className="w-8 h-8 object-cover object-center"/>
             </div>
         )
     }
 
     return(
-        <div className="item h-[85px] flex items-center justify-between px-4">
+        <div className="item h-[85px] flex items-center justify-between px-6 bg-white hover:bg-slate-50">
             <Link href={url} style={{flex : 2}}>
                 <div className="text-lg font-semibold ">
                     { 
@@ -123,6 +125,39 @@ export default function Items({url = '/', data}){
                 <ButtonLinkWhite  url={`/articles/edit?id=${data.Item.key}`} icon={<IcTwotoneEdit className = "w-5 h-5" />}/>
                 <ButtonWhite onClick={handleDeleteItems} icon={<IcBaselineDeleteOutline className = "w-5 h-5 text-red-700" />} />
                 <ButtonWhite onClick={handleDeleteItems} icon={<IconamoonShare2 className = "w-5 h-5 text-green-800" />} />
+            </div>
+        </div>
+    )
+}
+
+
+export function ItemsMail({mail, id, createdAt}){
+
+    const handleDeleteItems = async () => {
+        const api = await fetch('http://18.215.69.15:3000/api/newsletter/'+ id, {
+            method : 'DELETE',
+        })
+
+        if(api.ok) {
+            router.refresh()
+        } 
+    }
+
+    return(
+        <div className="item w-full px-6 py-3 flex items-center justify-between bg-white hover:bg-slate-50">
+             <div style={{flex : 2}}>
+                <div className="text-lg font-semibold ">
+                    {mail}
+                </div>
+            </div>
+            <div className="flex-1 flex items-center">
+                <div className="font-medium text-slate-500">{id}</div>
+            </div>
+            <div className="flex-1">
+                <div className="font-medium text-slate-500">{createdAt}</div>
+            </div>
+            <div className="flex-1 flex items-center gap-3 justify-end">
+                <ButtonWhite onClick={handleDeleteItems} icon={<IcBaselineDeleteOutline className = "w-5 h-5 text-red-700" />} />
             </div>
         </div>
     )

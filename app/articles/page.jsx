@@ -5,7 +5,7 @@ import ListeItems from "@/components/liste";
 
 async function getData(){
 
-    const response = await fetch('https://simple-server-e1bs.onrender.com/api/articles', { cache : "no-cache"})
+    const response = await fetch('http://18.215.69.15:3000/api/articles', { cache : "no-cache"})
     const data = await response.json()
 
     if(!response.ok) throw new Error('il y a une errreur dans le transfert')

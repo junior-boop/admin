@@ -7,8 +7,7 @@ import { useRouter } from "next/navigation";
 
 export default function Header({titre, sous, hasbtn, btnTitre, btnUrl}){
     return(
-        <div style={{ backgroundColor : '#fff5', backdropFilter : 'blur(17px)' }} className="mb-4 sticky top-0 z-50">
-            <Container>
+        <div style={{ backgroundColor : '#fff5', backdropFilter : 'blur(17px)' }} className="mb-4 sticky top-0 z-50 px-4 border-b border-slate-100">
                 <div className="flex justify-between items-center h-[120px] w-full px-2">
                     <div className="">
                         <div className="text-4xl font-bold font-poppins ">
@@ -22,7 +21,6 @@ export default function Header({titre, sous, hasbtn, btnTitre, btnUrl}){
                         {hasbtn && <ButtonLink url={btnUrl} titre={btnTitre} />}
                     </div>
                 </div>
-            </Container>
         </div>
     )
 }

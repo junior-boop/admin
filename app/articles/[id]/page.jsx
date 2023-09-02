@@ -3,7 +3,7 @@ import { CarbonWarningAltFilled } from "@/components/icon";
 import Link from "next/link";
 
 const getData = async (id) => {
-    const response = await fetch('https://simple-server-e1bs.onrender.com/api/articles/edit/'+id, {cache : "no-cache"})
+    const response = await fetch('http://18.215.69.15:3000/api/articles/edit/'+id, {cache : "no-cache"})
     const data = await response.json()
 
     if(!response) throw new Error('il y a un probleme')
@@ -11,14 +11,18 @@ const getData = async (id) => {
     return data
 }
 
+// 1693487988924_eXq_UF
+
 export default async function ReadArticle({params}){
     const { id } = params
     const Data = await getData(id)
     
     const {key, images, titre, contenu, imagesAlbum, createdAt, createdBy} = Data.Item
-    const imagesv = 'http://localhost:3000/images/'+ images[0].filename
+    const imagesv = 'http://18.215.69.15:3000'+ images[0]
     const content = contenu
-    const album = imagesAlbum[0] !== '' && imagesAlbum[0].split(',')
+    
+    const album = imagesAlbum.length > 0 && imagesAlbum.split(',')
+    // imagesAlbum[0] !== '' && imagesAlbum[0].split(',')
     return(
         <div style={{ height : 'calc(100vh - 49px)'}}  className=" overflow-hidden overflow-y-auto relative">
             <HeaderBack />
@@ -43,14 +47,14 @@ export default async function ReadArticle({params}){
                     }
                 </div>
                 {
-                    imagesAlbum[0] !== '' && (
+                    imagesAlbum.length > 0 && (
                         <>
                             <div className="w-[650px] m-auto text-xl font-bold my-8">
                                 Quelques images
                             </div>
                             <div className="w-[800px] mx-auto grid grid-cols-4 gap-3">
                                 {
-                                    album.map((el, key) => <div className="w-full aspect-square overflow-hidden"> <img src={'http://localhost:3000'+el} alt="" width={'100%'} className="aspect-square object-cover object-center" /> </div>)
+                                    album.map((el, key) => <div className="w-full aspect-square overflow-hidden" key = {key}> <img src={'http://18.215.69.15:3000'+el} alt="" width={'100%'} className="aspect-square object-cover object-center" /> </div>)
                                 }
                             </div>
                         </>

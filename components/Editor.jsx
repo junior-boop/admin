@@ -49,15 +49,15 @@ export default function Editor({post, saved, test}){
                 class : Images,
                 config: {
                     endpoints: {
-                      byFile: 'http://localhost:3000/api/image_content', // Your backend file uploader endpoint
-                      byUrl: 'http://localhost:3000/api/image_content', // Your endpoint that provides uploading by Url
+                      byFile: 'http://18.215.69.15:3000/api/image_content', // Your backend file uploader endpoint
+                      byUrl: 'http://18.215.69.15:3000/api/image_content', // Your endpoint that provides uploading by Url
                     }
                   }
               },
               link : {
                 class: Links,
                 config: {
-                  endpoint: 'http://localhost:3000/api/fetchUrl', // Your backend endpoint for url data fetching,
+                  endpoint: 'http://18.215.69.15:3000/api/fetchUrl', // Your backend endpoint for url data fetching,
                 }
               },
               quote : Quote,

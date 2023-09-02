@@ -13,7 +13,7 @@ export default function Routes({children, url = '/', icone}){
     }, [pathname])
 
     return(
-        <Link href={url} className={`p-4 rounded-lg hover:bg-slate-100 ${location ? 'bg-slate-200' : null} w-full block font-medium flex items-center gap-3`}>
+        <Link href={url} className={`p-4 rounded-lg hover:bg-slate-100 ${location ? 'bg-slate-200' : null} w-full block font-medium flex items-center gap-3 mb-1`}>
             {icone}
             {children}
         </Link>
