@@ -1,7 +1,5 @@
 import ArticleContent from "@/components/articles_content";
 import Header from "@/components/header";
-import Items from "@/components/items";
-import ListeItems from "@/components/liste";
 
 async function getData(){
 

@@ -1,6 +1,5 @@
 import Header from "@/components/header";
-import Items from "@/components/items";
-import ListeItems from "@/components/liste";
+import UserComponent from "@/components/user_component";
 
 const getData = async () => {
     const response = await fetch('http://18.215.69.15:3000/api/inscription', { cache : "no-store"})
@@ -17,9 +16,7 @@ export default async function Utilisateurs(){
     return(
         <div>
             <Header titre={'Utilisateurs'} sous={"Liste des utilisateurs s'etant inscrit"} />
-            <ListeItems>
-                
-            </ListeItems>
+            <UserComponent data={data} />
         </div>
     )
 }

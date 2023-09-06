@@ -17,7 +17,7 @@ export default async function ArticleListe(){
 
     return(
         <div>
-            <Header titre={'E-Mail'} sous={'Liste des articles du blog'} hasbtn btnTitre={'Nouvel article'} btnUrl={'/articles/new'} />
+            <Header titre={'E-Mail'} sous={'Liste des adress E-mails du blog'}  />
             <MailContent data = {Data} />
         </div>
     )

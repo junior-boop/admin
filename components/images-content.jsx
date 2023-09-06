@@ -45,7 +45,7 @@ export default function Images_content({data}){
                     data.map((el) => {
                         
                         if(el.value !== '[object Object]'){
-                            const element = JSON.parse(el.value)
+                            const element = el.value
                             return <ImageItem srcImage={element.path} key = {el.key}  onClick={() => handleMore(el.key)} />
                         }
                     })
@@ -96,7 +96,7 @@ const MoreContent = ({data, isOpen, closeBtn, btnDelete}) =>{
     useEffect(() => {
         setData(exemlpe.value)
         if (data !== null) {
-            const ville = JSON.parse(data.value)
+            const ville = data.value
             setData(ville)
         } else {
             setData(exemlpe.value)
