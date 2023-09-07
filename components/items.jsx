@@ -162,3 +162,107 @@ export function ItemsMail({mail, id, createdAt}){
         </div>
     )
 }
+
+export function ItemsRessources({url = '/', data, id}){
+    const {titre, images, createdBy, createdAt, key} = data
+    const router = useRouter()
+
+    const handleDeleteItems = async () => {
+        const api = await fetch('http://18.215.69.15:3000/api/articles/'+ id, {
+            method : 'DELETE',
+        })
+
+        if(api.ok) {
+            router.refresh()
+        } 
+    }
+    const handlePublished = async () => {
+        
+    }
+
+    const imagesAlbum = () => {
+        const liste = images.replace(/\[|\]/g, '')
+        const liste2 = liste.replace(/\"/g, '')
+        const imagess = liste2.length > 0 ? liste.split(',') : []
+        return imagess
+    }
+    
+    const album = imagesAlbum()
+
+
+    const imageMap = () => {
+       const tb = []
+        if(album.length > 7){
+            for(let i = 0; i < 7; i++){
+                const el = album[i].replace(/\"/g, '')
+                tb.push(el)
+            }
+        } else {
+            for(let i = 0; i < album.length; i++){
+                const el = album[i].replace(/\"/g, '')
+                tb.push(el)
+            }
+        }
+        return tb
+    }
+    const officialMap = album.length > 7 ? imageMap() : album
+    const Imagethumb = ({imagev}) => {
+
+        return(
+            <div style={{border :"3px solid white"}} className="w-8 h-8 rounded-full overflow-hidden ml-[-12px]">
+                <img src={`http://18.215.69.15:3000${imagev}`} alt="" className="w-8 h-8 object-cover object-center"/>
+            </div>
+        )
+    }
+    
+    return(
+        <div className="item h-[85px] flex items-center justify-between px-6 bg-white hover:bg-slate-50">
+            <Link href={url} style={{flex : 2}}>
+                <div className="text-lg font-semibold ">
+                    { 
+                        titre.length >= 40
+                        ? titre.substring(0, 40) + '...'
+                        : titre
+                    }
+                </div>
+                <div className="font-medium text-slate-500">
+                    Publié : {calculeDataEcart(createdAt)}
+                </div>
+            </Link>
+            <div className="flex-1">
+                <div className="font-medium text-slate-500">Auteur</div>
+                <div className="font-semibold text-lg">{createdBy.name} {createdBy.surname}</div>
+            </div>
+            <div className="flex-1">
+                <div className="font-medium text-slate-500">Album</div>
+                {
+                    album ? 
+                    (<div className="flex pl-3">
+                        {
+                            imageMap().length > 7 ? 
+                            (
+                                <>
+                                    {
+                                        officialMap.map((el, key) => <Imagethumb imagev={el} key={key} />)
+                                    }
+                                    <div style={{border : "3px solid white"}} className="w-8 h-8 rounded-full overflow-hidden ml-[-12px] bg-slate-800 text-white text-sm flex items-center justify-center">
+                                        +{album.length - 7}
+                                    </div>
+                                </>
+                            ) :
+                            imageMap().map((el, key) => <Imagethumb imagev={el} key={key} />)
+                        }
+                    </div>)
+                    : (
+                        <div style={{width:'max-content'}} className="px-4 bg-slate-100 text-xs py-[3px] rounded-2xl font-semibold">
+                            Aucune images
+                        </div>
+                    )
+                }
+            </div>
+            <div className="flex-1 flex items-center gap-3 justify-end">
+                <ButtonWhite onClick={handleDeleteItems} icon={<IcBaselineDeleteOutline className = "w-5 h-5 text-red-700" />} />
+            </div>
+        </div>
+    )
+}
