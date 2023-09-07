@@ -1,9 +1,10 @@
+import Container from "@/components/container";
 import { HeaderBack } from "@/components/header";
 import { CarbonWarningAltFilled } from "@/components/icon";
 import Link from "next/link";
 
 const getData = async (id) => {
-    const response = await fetch('http://18.215.69.15:3000/api/ressource/'+id, {cache : "no-cache"})
+    const response = await fetch('http://18.215.69.15:3000/api/ressources/'+id, {cache : "no-cache"})
     const data = await response.json()
 
     if(!response.ok) throw new Error('il y a un probleme')
@@ -17,51 +18,66 @@ export default async function ReadArticle({params}){
     const { id } = params
     const Data = await getData(id)
     
-    const {key, images, titre, contenu, imagesAlbum, createdAt, createdBy} = Data.Item
-    const imagesv = 'http://18.215.69.15:3000'+ images[0]
-    const content = contenu
-    
-    const album = imagesAlbum.length > 0 && imagesAlbum.split(',')
+    const {images, titre, createdAt, createdBy, like, share, download, description, categorie} = Data
+
+    const imagesAlbum = () => {
+        const liste = images.replace(/\[|\]/g, '')
+        const liste2 = liste.replace(/\"/g, '')
+        const imagess = liste2.length > 0 ? liste.split(',') : []
+        return imagess
+    }
+
     // imagesAlbum[0] !== '' && imagesAlbum[0].split(',')
     return(
         <div style={{ height : 'calc(100vh - 49px)'}}  className=" overflow-hidden overflow-y-auto relative">
             <HeaderBack />
-            <div>
-                <div className="w-[650px] m-auto text-5xl font-bold mb-4">
+            <Container>
+                <div className="w-full m-auto text-5xl font-bold mb-4">
                     {titre}
                 </div>
-                <div className="w-[650px] mx-auto mb-6">
+                <div className="w-full mx-auto mb-6">
                     <div>
-                        Auteur : {createdBy.name}
+                        Auteur : {createdBy.name} { createdBy.surname}
                     </div>
                     <div>
                         Publié : {createdAt}
                     </div>
                 </div>
-                <div className="w-[800px] m-auto border border-slate-100 rounded-lg overflow-hidden mb-6">
-                    <img src={imagesv} className="object-cover" width={'100%'} />
+                <div className="w-full m-auto  overflow-hidden mb-6">
+                    <div className="text-2xl font-bold my-5"> Images</div>
+                    <div className="grid grid-cols-3 gap-3">
+                        {
+                            imagesAlbum().map((el, key) => {
+                                const image = el.replace(/\"/g, '')
+                                return(
+                                    <div className="w-full aspect-square" key={key}>
+                                        <img src={"http://18.215.69.15:3000"+image} alt=""  className="w-full h-full object-cover rounded-lg"/>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
-                <div className="w-[650px] m-auto mb-6">
-                    {
-                        ConvertEditorToDiv(content.blocks)
-                    }
+
+                <div className="w-full m-auto mb-6">
+                    <div className="text-2xl font-bold my-5">
+                    Description
+                    </div>
+                    <div>
+                        {description}
+                    </div>
                 </div>
-                {
-                    imagesAlbum.length > 0 && (
-                        <>
-                            <div className="w-[650px] m-auto text-xl font-bold my-8">
-                                Quelques images
-                            </div>
-                            <div className="w-[800px] mx-auto grid grid-cols-4 gap-3">
-                                {
-                                    album.map((el, key) => <div className="w-full aspect-square overflow-hidden" key = {key}> <img src={'http://18.215.69.15:3000'+el} alt="" width={'100%'} className="aspect-square object-cover object-center" /> </div>)
-                                }
-                            </div>
-                        </>
-                    )
-                }
+                <div className="w-full m-auto mb-6">
+                    <div className="text-2xl font-bold my-5">
+                    categorie
+                    </div>
+                    <div>
+                        {categorie}
+                    </div>
+                </div>
+                
                 <div className="h-24"></div>
-            </div>
+            </Container>
         </div>
     )
 }
