@@ -32,12 +32,13 @@ export default function UserComponent({data}){
         setDataMore(null)
         
         setTimeout(async () => {
-            const response = await fetch("http://18.215.69.15:3000/api/images/" + keyImage, { 
+            const response = await fetch("http://18.215.69.15:3000/api/inscription/" + keyImage, { 
                 method: "DELETE",
             });
             
-            router.refresh()
-        }, 1000)
+            if(!response.ok)  router.refresh()
+           
+        }, 500)
     }
     return(
         <ListeItems>

@@ -132,7 +132,7 @@ export default function Items({url = '/', data, id}){
 
 
 export function ItemsMail({mail, id, createdAt}){
-
+    const router = useRouter()
     const handleDeleteItems = async () => {
         const api = await fetch('http://18.215.69.15:3000/api/newsletter/'+ id, {
             method : 'DELETE',
