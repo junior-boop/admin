@@ -8,7 +8,7 @@ export const GET = async (request) => {
 
     const response = {
         success : 1,
-        link: url, 
+        link: Url.value, 
         meta: {
             title,
             description,
