@@ -29,7 +29,7 @@ export default function ArticleNew(){
         bodyContent.append('contenu', contenu)
         bodyContent.append('titre', titre)
         
-        let response = await fetch("http://18.215.69.15:3000/api/articles", { 
+        let response = await fetch("/api/articles", { 
             method: "POST",
             body: bodyContent,
             headers: headersList
@@ -37,7 +37,7 @@ export default function ArticleNew(){
         
         if(response.ok){
             let data = await response.json();
-            router.push('/articles/'+data.key)
+            router.push('/articles/'+ data.key)
         }
     }
 
@@ -58,7 +58,7 @@ export default function ArticleNew(){
                         bodyContent.append("image", element.image_target)
                     });
                     
-                    let response = await fetch("http://18.215.69.15:3000/api/images", { 
+                    let response = await fetch("/api/images", { 
                         method: "POST",
                         body: bodyContent,
                         headers: headersList

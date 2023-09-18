@@ -1,7 +1,5 @@
 import Container from "@/components/container";
 import { HeaderBack } from "@/components/header";
-import { CarbonWarningAltFilled } from "@/components/icon";
-import Link from "next/link";
 
 const getData = async (id) => {
     const response = await fetch('http://18.215.69.15:3000/api/ressources/'+id, {cache : "no-cache"})
