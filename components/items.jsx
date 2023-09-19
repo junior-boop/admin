@@ -180,14 +180,9 @@ export function ItemsRessources({url = '/', data, id}){
         
     }
 
-    const imagesAlbum = () => {
-        const liste = images.replace(/\[|\]/g, '')
-        const liste2 = liste.replace(/\"/g, '')
-        const imagess = liste2.length > 0 ? liste.split(',') : []
-        return imagess
-    }
+
     
-    const album = imagesAlbum()
+    const album = images
 
 
     const imageMap = () => {

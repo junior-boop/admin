@@ -18,12 +18,7 @@ export default async function ReadArticle({params}){
     
     const {images, titre, createdAt, createdBy, like, share, download, description, categorie} = Data
 
-    const imagesAlbum = () => {
-        const liste = images.replace(/\[|\]/g, '')
-        const liste2 = liste.replace(/\"/g, '')
-        const imagess = liste2.length > 0 ? liste.split(',') : []
-        return imagess
-    }
+   
 
     // imagesAlbum[0] !== '' && imagesAlbum[0].split(',')
     return(
@@ -45,11 +40,11 @@ export default async function ReadArticle({params}){
                     <div className="text-2xl font-bold my-5"> Images</div>
                     <div className="grid grid-cols-3 gap-3">
                         {
-                            imagesAlbum().map((el, key) => {
+                            images.map((el, key) => {
                                 const image = el.replace(/\"/g, '')
                                 return(
                                     <div className="w-full aspect-square" key={key}>
-                                        <img src={"http://18.215.69.15:3000"+image} alt=""  className="w-full h-full object-cover rounded-lg"/>
+                                        <img src={"http://18.215.69.15:3000"+el} alt=""  className="w-full h-full object-cover rounded-lg"/>
                                     </div>
                                 )
                             })

@@ -14,7 +14,6 @@ export default function ArticlePost({post}){
     const [imageP, setImageP] = useState(null)
     const [titre, setTitre] = useState(post.Item.titre)
 
-    console.log(post.Item)
     
     const saveArticle = async ({images_album, contenu}) => {
         let headersList = {
