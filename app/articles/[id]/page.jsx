@@ -54,7 +54,7 @@ export default async function ReadArticle({params}){
                             </div>
                             <div className="w-[800px] mx-auto grid grid-cols-4 gap-3">
                                 {
-                                    album.map((el, key) => <div className="w-full aspect-square overflow-hidden" key = {key}> <img src={'http://18.215.69.15:3000'+el} alt="" width={'100%'} className="aspect-square object-cover object-center" /> </div>)
+                                    album.map((el, key) => <div className="w-full aspect-square overflow-hidden" key = {key}> <img src={el} alt="" width={'100%'} className="aspect-square object-cover object-center" /> </div>)
                                 }
                             </div>
                         </>

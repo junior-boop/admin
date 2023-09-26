@@ -44,7 +44,7 @@ export default async function ReadArticle({params}){
                                 const image = el.replace(/\"/g, '')
                                 return(
                                     <div className="w-full aspect-square" key={key}>
-                                        <img src={"http://18.215.69.15:3000"+el} alt=""  className="w-full h-full object-cover rounded-lg"/>
+                                        <img src={el} alt=""  className="w-full h-full object-cover rounded-lg"/>
                                     </div>
                                 )
                             })

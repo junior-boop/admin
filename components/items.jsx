@@ -71,7 +71,7 @@ export default function Items({url = '/', data, id}){
     const Imagethumb = ({imagev}) => {
         return(
             <div style={{border : "3px solid white"}} className="w-8 h-8 rounded-full overflow-hidden ml-[-12px]">
-                <img src={'http://18.215.69.15:3000' + imagev} alt="" className="w-8 h-8 object-cover object-center"/>
+                <img src={imagev} alt="" className="w-8 h-8 object-cover object-center"/>
             </div>
         )
     }
@@ -168,7 +168,7 @@ export function ItemsRessources({url = '/', data, id}){
     const router = useRouter()
 
     const handleDeleteItems = async () => {
-        const api = await fetch('http://18.215.69.15:3000/api/articles/'+ id, {
+        const api = await fetch('http://18.215.69.15:3000/api/ressources/'+ id, {
             method : 'DELETE',
         })
 
@@ -205,7 +205,7 @@ export function ItemsRessources({url = '/', data, id}){
 
         return(
             <div style={{border :"3px solid white"}} className="w-8 h-8 rounded-full overflow-hidden ml-[-12px]">
-                <img src={`http://18.215.69.15:3000${imagev}`} alt="" className="w-8 h-8 object-cover object-center"/>
+                <img src={imagev} alt="" className="w-8 h-8 object-cover object-center"/>
             </div>
         )
     }
