@@ -14,7 +14,7 @@ async function getData(){
 export default async function ArticleListe(){
 
     const Data = await getData()
-
+    
     return(
         <div>
             <Header titre={'Article'} sous={'Liste des articles du blog'} hasbtn btnTitre={'Nouvel article'} btnUrl={'/articles/new'} />

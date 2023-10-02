@@ -23,37 +23,47 @@ export default function ArticleNew() {
     const router = useRouter()
 
     const saveArticle = async ({ images_album, contenu }) => {
-        let headersList = {
-            "Accept": "*/*",
-            "User-Agent": "*"
-        }
-
-        let bodyContent = new FormData();
-        bodyContent.append('image', imageP.image_target)
-        bodyContent.append('imagesAlbum', images_album)
-        bodyContent.append('contenu', contenu)
-        bodyContent.append('titre', titre)
 
         if (typeof window !== 'undefined') {
             const reference = Storages
+
             const spaceRef = ref(reference, 'images/' + imageP.name)
             uploadBytes(spaceRef, imageP.image_target).then((snapshot) => {
-                getDownloadURL(spaceRef, snapshot).then(url => {
+                console.log('JE SUIS DEDANS')
+                getDownloadURL(spaceRef, snapshot).then(async url => {
+                    
+                    let headersList = {
+                        "Accept": "*/*",
+                        "User-Agent": "*"
+                    }
+            
+                    let bodyContent = new FormData();
+                    
+                    bodyContent.append('image', imageP.image_target)
+                    bodyContent.append('imagesAlbum', images_album)
+                    bodyContent.append('contenu', contenu)
+                    bodyContent.append('titre', titre)
                     bodyContent.append('google_images', url)
+
+                    let response = await fetch("/api/articles", {
+                        method: "POST",
+                        body: bodyContent,
+                        headers: headersList
+                    });
+        
+                    if (response.ok) {
+                        let data = await response.json();
+                        console.log(data)
+                        router.push('/articles/' + data.key)
+                    }
+                    
                 })
             });
+
+            
         }
 
-        let response = await fetch("/api/articles", {
-            method: "POST",
-            body: bodyContent,
-            headers: headersList
-        });
 
-        if (response.ok) {
-            let data = await response.json();
-            router.push('/articles/' + data.key)
-        }
     }
 
     const handleSaveData = () => {
