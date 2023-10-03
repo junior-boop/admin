@@ -10,7 +10,6 @@ export const POST =  async (request) => {
         }
 
     const images = await request.formData()
-    console.log(images)
 
     let response = await fetch("http://18.215.69.15:3000/api/images", { 
         method: "POST",

@@ -39,8 +39,11 @@ export default function ArticleNew() {
             
                     let bodyContent = new FormData();
                     
+
+                    console.log(img)
+
                     bodyContent.append('image', imageP.image_target)
-                    bodyContent.append('imagesAlbum', images_album)
+                    bodyContent.append('imagesAlbum', img)
                     bodyContent.append('contenu', contenu)
                     bodyContent.append('titre', titre)
                     bodyContent.append('google_images', url)
@@ -54,7 +57,7 @@ export default function ArticleNew() {
                     if (response.ok) {
                         let data = await response.json();
                         console.log(data)
-                        router.push('/articles/' + data.key)
+                        // router.push('/articles/' + data.key)
                     }
                     
                 })
@@ -82,12 +85,9 @@ export default function ArticleNew() {
                     base64.forEach(element => {
                         bodyContent.append("image", element.image_target)
                         if (typeof window !== 'undefined') {
-                            console.log('je fonctionne 1')
                             const reference = Storages
                             const spaceRef = ref(reference, 'images/' + element.name)
                             uploadBytes(spaceRef, element.image_target).then((snapshot) => {
-                                console.log('je fonctionne 2')
-                                console.log('Uploaded a blob or file!');
                                 getDownloadURL(spaceRef, snapshot).then(url => {
                                     console.log('je fonctionne 3')
                                     setImg(el => [...el, url])

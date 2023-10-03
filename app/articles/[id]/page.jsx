@@ -17,8 +17,10 @@ export default async function ReadArticle({params}){
     const { id } = params
     const Data = await getData(id)
     
-    const {key, images, titre, contenu, imagesAlbum, createdAt, createdBy} = Data.Item
-    const imagesv = 'http://18.215.69.15:3000'+ images[0]
+    const {key, images, titre, contenu, imagesAlbum, createdAt, createdBy, google_images} = Data.Item
+    const imagesv = google_images
+    // const imagesv = 'http://18.215.69.15:3000'+ images[0]
+    // console.log(Data.Item.google_images)
     const content = contenu
     
     const album = imagesAlbum.length > 0 && imagesAlbum.split(',')

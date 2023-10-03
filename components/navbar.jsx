@@ -13,6 +13,7 @@ export default function Navbar(){
                 <Routes icone={<CarbonFolder className = "w-6 h-6" />} url={'/ressources'}> Ressources </Routes>
                 <Routes icone={<CarbonUserMultiple className = "w-6 h-6" />} url={'/utilisateurs'}> Utilisateurs </Routes>
                 <Routes icone={<CarbonEmail className = "w-6 h-6" />} url={'/mails'}> E-mails </Routes>
+                <Routes icone={<CarbonEmail className = "w-6 h-6" />} url={'/contact-us'}> Contact-us Message </Routes>
                 <Routes icone={<CarbonImageCopy className = "w-6 h-6" />} url={'/images'}> Images </Routes>
             </div>
         </nav>
