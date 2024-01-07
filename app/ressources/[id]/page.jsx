@@ -2,7 +2,7 @@ import Container from "@/components/container";
 import { HeaderBack } from "@/components/header";
 
 const getData = async (id) => {
-    const response = await fetch('http://18.215.69.15:3000/api/ressources/'+id, {cache : "no-cache"})
+    const response = await fetch(process.env.URL + '/ressources/'+id, {cache : "no-cache"})
     const data = await response.json()
 
     if(!response.ok) throw new Error('il y a un probleme')
@@ -16,11 +16,11 @@ export default async function ReadArticle({params}){
     const { id } = params
     const Data = await getData(id)
     
-    const {images, titre, createdAt, createdBy, like, share, download, description, categorie} = Data
+    const {images, titre, createdAt, createdBy, description, categorie} = Data.ressources
 
    
+    const album_images = JSON.parse(images)
 
-    // imagesAlbum[0] !== '' && imagesAlbum[0].split(',')
     return(
         <div style={{ height : 'calc(100vh - 49px)'}}  className=" overflow-hidden overflow-y-auto relative">
             <HeaderBack />
@@ -29,8 +29,11 @@ export default async function ReadArticle({params}){
                     {titre}
                 </div>
                 <div className="w-full mx-auto mb-6">
-                    <div>
-                        Auteur : {createdBy.name} { createdBy.surname}
+                    <div className="font-medium">
+                        Auteur : {Data.createdBy.user_name} { Data.createdBy.user_subname}
+                    </div>
+                    <div className="mb-2 font-medium">
+                        Auteur id : {Data.createdBy.userId} 
                     </div>
                     <div>
                         Publié : {createdAt}
@@ -40,11 +43,12 @@ export default async function ReadArticle({params}){
                     <div className="text-2xl font-bold my-5"> Images</div>
                     <div className="grid grid-cols-3 gap-3">
                         {
-                            images.map((el, key) => {
-                                const image = el.replace(/\"/g, '')
+                            album_images.map((el, key) => {
+                                const element = process.env.URL + '/images' + el
+                             
                                 return(
                                     <div className="w-full aspect-square" key={key}>
-                                        <img src={el} alt=""  className="w-full h-full object-cover rounded-lg"/>
+                                        <img src={element} alt=""  className="w-full h-full object-cover rounded-lg"/>
                                     </div>
                                 )
                             })

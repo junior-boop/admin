@@ -1,3 +1,5 @@
+import { urlServerHoster } from "@/utiles/process"
+
 export const GET = async (request) => {
     return new Response('villes')
 }
@@ -11,7 +13,9 @@ export const POST =  async (request) => {
 
     const images = await request.formData()
 
-    let response = await fetch("http://18.215.69.15:3000/api/images", { 
+    console.log(images)
+
+    let response = await fetch(urlServerHoster + "/images", { 
         method: "POST",
         body: images,
         headers: headersList

@@ -6,8 +6,7 @@ import { useState, useEffect } from "react";
 import { MaterialSymbolsBrokenImageOutlineRounded, MaterialSymbolsCloseRounded } from "@/components/icon";
 import generated_ID from "@/utiles/generated_id";
 import { useRouter } from "next/navigation";
-import useFirebase from "@/firebase/firebase";
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { urlServerHoster } from "@/utiles/process";
 
 
 export default function ArticleNew() {
@@ -16,58 +15,9 @@ export default function ArticleNew() {
     const [base64, setBase64] = useState([])
     const [imageP, setImageP] = useState(null)
     const [titre, setTitre] = useState('')
-    const { Storages } = useFirebase()
-
-    const [img, setImg] = useState([])
 
     const router = useRouter()
 
-    const saveArticle = async ({ images_album, contenu }) => {
-
-        if (typeof window !== 'undefined') {
-            const reference = Storages
-
-            const spaceRef = ref(reference, 'images/' + imageP.name)
-            uploadBytes(spaceRef, imageP.image_target).then((snapshot) => {
-                console.log('JE SUIS DEDANS')
-                getDownloadURL(spaceRef, snapshot).then(async url => {
-                    
-                    let headersList = {
-                        "Accept": "*/*",
-                        "User-Agent": "*"
-                    }
-            
-                    let bodyContent = new FormData();
-                    
-
-                    console.log(img)
-
-                    bodyContent.append('image', imageP.image_target)
-                    bodyContent.append('imagesAlbum', img)
-                    bodyContent.append('contenu', contenu)
-                    bodyContent.append('titre', titre)
-                    bodyContent.append('google_images', url)
-
-                    let response = await fetch("/api/articles", {
-                        method: "POST",
-                        body: bodyContent,
-                        headers: headersList
-                    });
-        
-                    if (response.ok) {
-                        let data = await response.json();
-                        console.log(data)
-                        // router.push('/articles/' + data.key)
-                    }
-                    
-                })
-            });
-
-            
-        }
-
-
-    }
 
     const handleSaveData = () => {
 
@@ -75,44 +25,71 @@ export default function ArticleNew() {
         editor.save()
             .then((output) => {
                 (async () => {
-                    let headersList = {
-                        "Accept": "*/*",
-                        "User-Agent": "*"
-                    }
-
-                    let bodyContent = new FormData();
+                    const bodyContent = new FormData();
 
                     base64.forEach(element => {
-                        bodyContent.append("image", element.image_target)
-                        if (typeof window !== 'undefined') {
-                            const reference = Storages
-                            const spaceRef = ref(reference, 'images/' + element.name)
-                            uploadBytes(spaceRef, element.image_target).then((snapshot) => {
-                                getDownloadURL(spaceRef, snapshot).then(url => {
-                                    console.log('je fonctionne 3')
-                                    setImg(el => [...el, url])
-                                })
-                            });
-                        }
+                        bodyContent.append("images", element.image_target)
                     });
 
-                    let response = await fetch("/api/images", {
+                    const response = await fetch("/api/multiple_images", {
                         method: "POST",
-                        body: bodyContent,
-                        headers: headersList
+                        body: bodyContent
                     });
 
                     if (response.ok) {
-                        let data = await response.json();
-
-                        saveArticle({
-                            images_album: img,
+                        const data = await response.json();
+                        console.log(data, output)
+                        await saveArticle({
+                            images_album: data,
                             contenu: JSON.stringify(output)
                         })
                     }
                 })()
             })
             .catch((reason) => console.log(reason))
+    }
+
+    
+    const saveArticle = async ({ images_album, contenu }) => {
+
+        let headersList = {
+            "Accept": "*/*",
+            "User-Agent": "*"
+        }
+    
+        const bodyContent = new FormData();
+        const images =  new FormData()
+        
+        
+        images.append('images', imageP.image_target)
+    
+        let response = await fetch("/api/images", {
+            method: "POST",
+            body: images,
+            headers: headersList
+        });
+    
+        if (response.ok) {
+
+            bodyContent.append('images', JSON.stringify(await response.json()) )
+            bodyContent.append('gallerieImage', images_album)
+            bodyContent.append('contenu', contenu)
+            bodyContent.append('titre', titre)
+
+            const articlesSave = await fetch('/api/articles', {
+                method : 'POST', 
+                body : bodyContent,
+                headers : headersList
+            })
+            console.log('true Article', articlesSave.ok)
+            if(articlesSave.ok) {
+                let data = await articlesSave.json();
+                console.log(data)
+                // router.push('/articles/' + data.key)
+            }
+           
+        }
+    
     }
 
 
@@ -165,10 +142,15 @@ export default function ArticleNew() {
         }
     }
 
+    const handlePublished = () => {
+        
+        
+          
+    }
 
     return (
         <div style={{ height: 'calc(100vh - 49px)' }} className=" overflow-hidden overflow-y-auto relative">
-            <HeaderBack btnSave onClick={handleSaveData} />
+            <HeaderBack btnSave onClick={handleSaveData} btnPublish onPublished={handlePublished} />
             <div>
                 <div className='w-[650px] m-auto font-semibold text-base text-gray-500 border-b border-slate-200 pb-3 cursor-default'>
                     Titre de l'article

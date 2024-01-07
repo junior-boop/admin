@@ -39,6 +39,7 @@ export default function ArticleContent({data}){
 
 
 export function MailContent({data}){
+    console.log(data)
 
     return(
         <ListeItems>
@@ -48,9 +49,7 @@ export function MailContent({data}){
                     <>
                         {
                             data.map( el => {
-                                if(el.value.hasOwnProperty('mail')){
-                                    return <ItemsMail mail={el.value.mail} id={el.value.key} createdAt={el.value.createdAt} key={el.value.key} />
-                                }
+                                return <ItemsMail mail={el.email} id={el.newsletterId} createdAt={el.createdAt} key={el.newsletterId} />
                             })
                         }
                     </>

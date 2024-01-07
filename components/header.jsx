@@ -26,7 +26,7 @@ export default function Header({titre, sous, hasbtn, btnTitre, btnUrl}){
 }
 
 
-export function HeaderBack({btnSave, onClick}){
+export function HeaderBack({btnSave, onClick, btnPublish, onPublished}){
     const route = useRouter()
     return(
         <div style={{ backgroundColor : '#fff5', backdropFilter : 'blur(17px)' }} className="mb-4 sticky top-0 z-50">
@@ -41,6 +41,7 @@ export function HeaderBack({btnSave, onClick}){
                        </div>
                     </div>
                     <div>
+                        {btnPublish && <button onClick={onPublished} className="px-4 py-3 mr-2 rounded-md font-medium bg-green-600 hover:bg-green-700 text-white">Publier</button>}
                         {btnSave && <button onClick={onClick} className="px-4 py-3 rounded-md font-medium bg-slate-900 hover:bg-slate-800 text-white">Enregistrer</button>}
                     </div>
                 </div>

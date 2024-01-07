@@ -134,7 +134,7 @@ export default function Items({url = '/', data, id}){
 export function ItemsMail({mail, id, createdAt}){
     const router = useRouter()
     const handleDeleteItems = async () => {
-        const api = await fetch('http://18.215.69.15:3000/api/newsletter/'+ id, {
+        const api = await fetch('/api/newsletter/'+ id, {
             method : 'DELETE',
         })
 
@@ -164,11 +164,11 @@ export function ItemsMail({mail, id, createdAt}){
 }
 
 export function ItemsRessources({url = '/', data, id}){
-    const {titre, images, createdBy, createdAt, key} = data
+    const {titre, images, createdBy, createdAt} = data
     const router = useRouter()
 
     const handleDeleteItems = async () => {
-        const api = await fetch('http://18.215.69.15:3000/api/ressources/'+ id, {
+        const api = await fetch('/api/ressources/'+ id, {
             method : 'DELETE',
         })
 
@@ -176,40 +176,33 @@ export function ItemsRessources({url = '/', data, id}){
             router.refresh()
         } 
     }
-    const handlePublished = async () => {
-        
-    }
-
-
-    
-    const album = images
-
+    const album = JSON.parse(images)
 
     const imageMap = () => {
-       const tb = []
-        if(album.length > 7){
-            for(let i = 0; i < 7; i++){
-                const el = album[i].replace(/\"/g, '')
-                tb.push(el)
-            }
-        } else {
-            for(let i = 0; i < album.length; i++){
-                const el = album[i].replace(/\"/g, '')
-                tb.push(el)
-            }
-        }
-        return tb
-    }
+        const tb = []
+         if(album){
+             if(album.length > 7){
+                 for(let i = 0; i < 7; i++){
+                     tb.push(album[i])
+                 }
+             }
+         }
+         return tb
+     }
+    
+  
+   
     const officialMap = album.length > 7 ? imageMap() : album
     const Imagethumb = ({imagev}) => {
-
         return(
             <div style={{border :"3px solid white"}} className="w-8 h-8 rounded-full overflow-hidden ml-[-12px]">
-                <img src={imagev} alt="" className="w-8 h-8 object-cover object-center"/>
+                <img src={`https://i3de-server.godigital.workers.dev/images${imagev}`} alt="" className="w-8 h-8 object-cover object-center"/>
             </div>
         )
     }
     
+    const UserId = JSON.parse(createdBy).userId
+
     return(
         <div className="item h-[85px] flex items-center justify-between px-6 bg-white hover:bg-slate-50">
             <Link href={url} style={{flex : 2}}>
@@ -225,8 +218,8 @@ export function ItemsRessources({url = '/', data, id}){
                 </div>
             </Link>
             <div className="flex-1">
-                <div className="font-medium text-slate-500">Auteur</div>
-                <div className="font-semibold text-lg">{createdBy.name} {createdBy.surname}</div>
+                <div className="font-medium text-slate-500">Auteur Id</div>
+                <div className="font-semibold text-lg">{UserId}</div>
             </div>
             <div className="flex-1">
                 <div className="font-medium text-slate-500">Album</div>
@@ -245,7 +238,7 @@ export function ItemsRessources({url = '/', data, id}){
                                     </div>
                                 </>
                             ) :
-                            imageMap().map((el, key) => <Imagethumb imagev={el} key={key} />)
+                            officialMap.map((el, key) => <Imagethumb imagev={el} key={key} />)
                         }
                     </div>)
                     : (

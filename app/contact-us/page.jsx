@@ -1,11 +1,10 @@
 import ButtonLink from "@/components/button"
 import Header from "@/components/header"
-import { CarbonDocumentAdd } from "@/components/icon"
 import Items, { ItemsRessources, MessageRessource } from "@/components/items"
 import ListeItems from "@/components/liste"
 
 const getData = async () => {
-    const response = await fetch('http://18.215.69.15:3000/api/contact', {cache : 'no-store'})
+    const response = await fetch(process.env.URL + '/contact', {cache : 'no-store'})
     const data = await response.json()
 
     if(!response.ok) throw new Error(" Il y a un probleme server")

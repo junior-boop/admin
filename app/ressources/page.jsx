@@ -5,7 +5,7 @@ import Items, { ItemsRessources } from "@/components/items"
 import ListeItems from "@/components/liste"
 
 const getData = async () => {
-    const response = await fetch('http://18.215.69.15:3000/api/ressources/', {cache : 'no-store'})
+    const response = await fetch(process.env.URL + '/ressources', {cache : 'no-store'})
     const data = await response.json()
 
     if(!response.ok) throw new Error(" Il y a un probleme server")
@@ -16,6 +16,7 @@ const getData = async () => {
 export default async function Ressources(){
 
     const data = await getData()
+    console.log(data)
 
     return(
         <div>
@@ -34,7 +35,7 @@ export function ArticleContent({data}){
                 ? (
                     <>
                         {
-                        data.map( el => < ItemsRessources url={`/ressources/${el.key}`} data={el.value} id={el.key} key={el.key} />)
+                        data.map( el => < ItemsRessources url={`/ressources/${el.Id}`} data={el} id={el.Id} key={el.Id} />)
                         }
                     </>
                 ) 

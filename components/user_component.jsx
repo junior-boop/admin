@@ -6,7 +6,7 @@ import ListeItems from "./liste";
 import { useRouter } from "next/navigation";
 
 export default function UserComponent({data}){
-
+    console.log(data)
     const [dataMore, setDataMore] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
     const [keyImage, setKeyImage] = useState('')
@@ -43,7 +43,7 @@ export default function UserComponent({data}){
     return(
         <ListeItems>
             {
-                data.map(el => <ItemsUser key = {el.key} data={el.value} onClick = {() => handleMore(el.key)} />)
+                data.map(el => <ItemsUser key = {el.userId} data={el} onClick = {() => handleMore(el.key)} />)
             }
             <MoreContent data = {dataMore} isOpen = {isOpen} closeBtn={handleCloseMore} btnDelete={handleSupprime} />
         </ListeItems>
@@ -56,23 +56,23 @@ const ItemsUser = ({data, onClick}) => {
         <button onClick={onClick} className="item h-[85px] flex items-center justify-between px-6 bg-white hover:bg-slate-50 w-full text-left">
            <div className="flex-1">
                 <div className="font-medium text-slate-500">Nom</div>
-                <div className="font-semibold text-lg">{data.name}</div>
+                <div className="font-semibold text-lg">{data.user_name}</div>
            </div>
            <div className="flex-1">
                 <div className="font-medium text-slate-500">Prenom</div>
-                <div className="font-semibold text-lg">{data.surname}</div>
+                <div className="font-semibold text-lg">{data.user_subname}</div>
            </div>
            <div className="flex-1">
                 <div className="font-medium text-slate-500">Téléphone</div>
-                <div className="font-semibold text-lg">{data.tel}</div>
+                <div className="font-semibold text-lg">{data.user_telephone}</div>
            </div>
            <div className="flex-1">
                 <div className="font-medium text-slate-500">E-mail</div>
-                <div className="font-semibold text-lg">{data.mail}</div>
+                <div className="font-semibold text-lg">{data.user_mail}</div>
            </div>
            <div className="flex-1">
                 <div className="font-medium text-slate-500">Ville</div>
-                <div className="font-semibold text-lg">{data.town}</div>
+                <div className="font-semibold text-lg">{data.user_town}</div>
            </div>
         </button>
     )

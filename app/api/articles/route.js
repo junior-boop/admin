@@ -1,3 +1,5 @@
+import { urlServerHoster } from "@/utiles/process";
+
 export const POST = async (request) => {
 
     const  headersList = {
@@ -6,7 +8,7 @@ export const POST = async (request) => {
 
     const bodyContent = await request.formData()
 
-    let response = await fetch("http://18.215.69.15:3000/api/articles", { 
+    let response = await fetch(urlServerHoster + "/articles", { 
         method: "POST",
         body: bodyContent,
         headers: headersList
