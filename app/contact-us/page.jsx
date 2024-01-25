@@ -35,7 +35,7 @@ export function MessageContent({data}){
                 ? (
                     <>
                         {
-                        data.map( el => < MessageRessource url={`/contact-us/${el.key}`} data={el.value} id={el.key} key={el.key} />)
+                        data.map( el => < MessageRessource url={`/contact-us/${el.Id}`} data={el} id={el.Id} key={el.Id} />)
                         }
                     </>
                 ) 

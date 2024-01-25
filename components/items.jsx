@@ -256,44 +256,31 @@ export function ItemsRessources({url = '/', data, id}){
 }
 
 export function MessageRessource({url = '/', data, id}){
-    const { name, surname, ville, tel, mail, message } = data
+    const { Id, nom, prenom, residence, telephone, email } = data
     const router = useRouter()
-
-    const handleDeleteItems = async () => {
-        const api = await fetch('http://18.215.69.15:3000/api/contact/'+ id, {
-            method : 'DELETE',
-        })
-
-        if(api.ok) {
-            router.refresh()
-        } 
-    }
-   
-    
-
     
     return(
         <div className="item h-[85px] flex items-center justify-between px-6 bg-white hover:bg-slate-50">
             <Link href={url} style={{flex : 2}}>
                 <div>
                     <div className="font-medium text-slate-500">Auteur</div>
-                    <div className="font-semibold text-lg">{name} {surname}</div>
+                    <div className="font-semibold text-lg">{nom} {prenom}</div>
                 </div>
             </Link>
             <div className="flex-1">
                 <div className="font-medium text-slate-500">ville</div>
-                <div className="font-semibold text-lg">{ville}</div>
+                <div className="font-semibold text-lg">{residence}</div>
             </div>
             <div className="flex-1">
                 <div className="font-medium text-slate-500">mail</div>
-                <div className="font-semibold text-lg">{mail}</div>
+                <div className="font-semibold text-lg">{email}</div>
             </div>
             <div className="flex-1">
                 <div className="font-medium text-slate-500">Téléphone</div>
-                <div className="font-semibold text-lg">{tel}</div>
+                <div className="font-semibold text-lg">{telephone}</div>
             </div>
             <div className="flex items-center gap-3 justify-end">
-                <ButtonWhite onClick={handleDeleteItems} icon={<IcBaselineDeleteOutline className = "w-5 h-5 text-red-700" />} />
+                <ButtonWhite  icon={<IcBaselineDeleteOutline className = "w-5 h-5 text-red-700" />} />
             </div>
         </div>
     )
